@@ -1,0 +1,2650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ferdy Capizeño VA Training — Client Acquisition System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --yellow: #FFC200;
+            --black: #0a0a0a;
+            --dark: #111111;
+            --card: #ffffff;
+            --gray: #f5f5f5;
+            --text: #333333;
+            --text-light: #666666;
+            --border: #e0e0e0;
+            --success: #22c55e;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--black);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 194, 0, 0.2);
+            z-index: 1000;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: var(--yellow);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 4px;
+            left: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 999;
+            padding: 1rem 2rem;
+            border-bottom: 1px solid rgba(255, 194, 0, 0.2);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--yellow);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--yellow);
+        }
+
+        .nav-cta {
+            background: var(--yellow);
+            color: var(--black) !important;
+            padding: 0.5rem 1.25rem;
+            border-radius: 50px;
+            font-weight: 600 !important;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--yellow);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 8rem 2rem 4rem;
+            background: 
+                radial-gradient(ellipse at 20% 50%, rgba(255, 194, 0, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 50%, rgba(255, 194, 0, 0.1) 0%, transparent 50%),
+                var(--black);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23FFC200' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.5;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255, 194, 0, 0.15);
+            border: 1px solid rgba(255, 194, 0, 0.3);
+            color: var(--yellow);
+            padding: 0.5rem 1.25rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            color: #fff;
+            margin-bottom: 1rem;
+            animation: fadeInUp 0.8s ease 0.2s both;
+        }
+
+        .hero h1 span {
+            color: var(--yellow);
+            display: block;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+            animation: fadeInUp 0.8s ease 0.4s both;
+        }
+
+        .hero-text {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.6);
+            max-width: 600px;
+            margin: 0 auto 2.5rem;
+            animation: fadeInUp 0.8s ease 0.6s both;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: var(--yellow);
+            color: var(--black);
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.8s ease 0.8s both;
+            border: 2px solid var(--yellow);
+        }
+
+        .hero-cta:hover {
+            background: transparent;
+            color: var(--yellow);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(255, 194, 0, 0.3);
+        }
+
+        .social-proof {
+            margin-top: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            animation: fadeInUp 0.8s ease 1s both;
+        }
+
+        .avatar-group {
+            display: flex;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 3px solid var(--black);
+            margin-left: -10px;
+            background: linear-gradient(135deg, var(--yellow), #ff9500);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.8rem;
+            color: var(--black);
+        }
+
+        .avatar:first-child {
+            margin-left: 0;
+        }
+
+        .social-proof-text {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+
+        .social-proof-text strong {
+            color: var(--yellow);
+        }
+
+        /* System Overview Bar */
+        .system-overview {
+            background: var(--dark);
+            padding: 3rem 2rem;
+            border-top: 1px solid rgba(255, 194, 0, 0.1);
+            border-bottom: 1px solid rgba(255, 194, 0, 0.1);
+            overflow-x: auto;
+        }
+
+        .overview-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.5rem;
+            min-width: 900px;
+        }
+
+        .overview-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            padding: 0.5rem;
+        }
+
+        .overview-item:hover {
+            transform: translateY(-3px);
+        }
+
+        .overview-item:hover .overview-node {
+            background: var(--yellow);
+            color: var(--black);
+            box-shadow: 0 0 20px rgba(255, 194, 0, 0.4);
+        }
+
+        .overview-node {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 194, 0, 0.1);
+            border: 2px solid var(--yellow);
+            color: var(--yellow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .overview-item.active .overview-node {
+            background: var(--yellow);
+            color: var(--black);
+        }
+
+        .overview-label {
+            color: #fff;
+            font-size: 0.8rem;
+            font-weight: 600;
+            max-width: 100px;
+        }
+
+        .overview-sublabel {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.7rem;
+            max-width: 100px;
+        }
+
+        .overview-connector {
+            flex: 1;
+            height: 2px;
+            background: repeating-linear-gradient(90deg, var(--yellow) 0, var(--yellow) 5px, transparent 5px, transparent 10px);
+            opacity: 0.3;
+            min-width: 30px;
+        }
+
+        /* Modules Section */
+        .modules-section {
+            padding: 5rem 2rem;
+            background: var(--black);
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 4rem;
+        }
+
+        .section-header h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            color: #fff;
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 1.1rem;
+        }
+
+        .modules-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .module-card {
+            background: var(--card);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid var(--border);
+            cursor: pointer;
+        }
+
+        .module-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 60px rgba(255, 194, 0, 0.15);
+            border-color: var(--yellow);
+        }
+
+        .module-card.expanded {
+            grid-column: 1 / -1;
+            cursor: default;
+        }
+
+        .module-card.expanded:hover {
+            transform: none;
+        }
+
+        .module-header {
+            padding: 1.75rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1.25rem;
+            position: relative;
+        }
+
+        .module-number {
+            width: 50px;
+            height: 50px;
+            min-width: 50px;
+            background: var(--yellow);
+            color: var(--black);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .module-title-group {
+            flex: 1;
+        }
+
+        .module-title {
+            font-size: 1.25rem;
+            color: var(--black);
+            margin-bottom: 0.25rem;
+        }
+
+        .module-goal {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            font-style: italic;
+        }
+
+        .module-toggle {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--gray);
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: var(--text);
+        }
+
+        .module-toggle:hover {
+            background: var(--yellow);
+            color: var(--black);
+        }
+
+        .module-toggle i {
+            transition: transform 0.3s;
+        }
+
+        .module-card.expanded .module-toggle i {
+            transform: rotate(180deg);
+        }
+
+        .module-preview {
+            padding: 0 1.75rem 1.75rem;
+            color: var(--text-light);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .module-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s;
+            opacity: 0;
+        }
+
+        .module-card.expanded .module-content {
+            max-height: 5000px;
+            opacity: 1;
+        }
+
+        .module-inner {
+            padding: 0 1.75rem 2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .content-block {
+            margin-bottom: 2rem;
+        }
+
+        .content-block h4 {
+            font-size: 1.1rem;
+            color: var(--black);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .content-block h4 i {
+            color: var(--yellow);
+        }
+
+        .content-block p, .content-block li {
+            color: var(--text);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 0.75rem;
+        }
+
+        .content-block ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .content-block ul li {
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .content-block ul li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--yellow);
+            font-weight: 700;
+        }
+
+        .example-box {
+            background: var(--gray);
+            border-left: 4px solid var(--yellow);
+            padding: 1.25rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1rem 0;
+            font-family: 'Inter', monospace;
+            font-size: 0.9rem;
+            white-space: pre-wrap;
+            line-height: 1.6;
+        }
+
+        .example-box.good {
+            border-left-color: var(--success);
+            background: rgba(34, 197, 94, 0.05);
+        }
+
+        .example-box.bad {
+            border-left-color: #ef4444;
+            background: rgba(239, 68, 68, 0.05);
+        }
+
+        .template-box {
+            background: var(--black);
+            color: #fff;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+            line-height: 1.8;
+            position: relative;
+        }
+
+        .template-box::before {
+            content: 'TEMPLATE';
+            position: absolute;
+            top: -10px;
+            left: 1rem;
+            background: var(--yellow);
+            color: var(--black);
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+
+        .checklist {
+            display: grid;
+            gap: 0.5rem;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            background: var(--gray);
+            border-radius: 8px;
+        }
+
+        .checklist-item i {
+            color: var(--yellow);
+            margin-top: 0.2rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background: var(--black);
+            color: var(--yellow);
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background: var(--gray);
+        }
+
+        .activity-banner {
+            background: linear-gradient(135deg, var(--yellow), #ff9500);
+            color: var(--black);
+            padding: 1.25rem 1.75rem;
+            border-radius: 12px;
+            margin-top: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-weight: 600;
+        }
+
+        .activity-banner i {
+            font-size: 1.5rem;
+        }
+
+        /* System Flow */
+        .system-flow {
+            padding: 5rem 2rem;
+            background: var(--dark);
+        }
+
+        .flow-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .flow-title {
+            text-align: center;
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            color: #fff;
+            margin-bottom: 3rem;
+        }
+
+        .flow-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            position: relative;
+        }
+
+        .flow-step {
+            background: rgba(255, 194, 0, 0.1);
+            border: 2px solid var(--yellow);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .flow-step:hover {
+            background: rgba(255, 194, 0, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .flow-step-number {
+            width: 40px;
+            height: 40px;
+            background: var(--yellow);
+            color: var(--black);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin: 0 auto 1rem;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .flow-step h4 {
+            color: #fff;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .flow-step p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.85rem;
+        }
+
+        .flow-arrow {
+            position: absolute;
+            right: -1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--yellow);
+            font-size: 1.5rem;
+            z-index: 2;
+        }
+
+        .flow-grid .flow-step:nth-child(4) .flow-arrow,
+        .flow-grid .flow-step:nth-child(7) .flow-arrow {
+            display: none;
+        }
+
+        .flow-note {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 2rem;
+            font-style: italic;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 5rem 2rem;
+            background: var(--black);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 194, 0, 0.05) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 1; }
+        }
+
+        .cta-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .cta-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .cta-header h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            color: #fff;
+            margin-bottom: 1rem;
+        }
+
+        .cta-header p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 1.1rem;
+        }
+
+        .cta-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .cta-card {
+            background: var(--card);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .cta-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--yellow);
+            box-shadow: 0 20px 60px rgba(255, 194, 0, 0.15);
+        }
+
+        .cta-card.featured {
+            background: var(--yellow);
+            color: var(--black);
+        }
+
+        .cta-card.featured:hover {
+            box-shadow: 0 20px 60px rgba(255, 194, 0, 0.3);
+        }
+
+        .cta-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gray);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.25rem;
+            font-size: 1.5rem;
+            color: var(--black);
+        }
+
+        .cta-card.featured .cta-icon {
+            background: var(--black);
+            color: var(--yellow);
+        }
+
+        .cta-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .cta-card p {
+            font-size: 0.95rem;
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-card.featured p {
+            color: rgba(0, 0, 0, 0.7);
+        }
+
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.875rem 1.75rem;
+            border-radius: 50px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .cta-btn-primary {
+            background: var(--yellow);
+            color: var(--black);
+        }
+
+        .cta-btn-primary:hover {
+            background: var(--black);
+            color: var(--yellow);
+            box-shadow: 0 0 0 2px var(--yellow);
+        }
+
+        .cta-btn-outline {
+            background: transparent;
+            color: var(--black);
+            border: 2px solid var(--black);
+        }
+
+        .cta-btn-outline:hover {
+            background: var(--black);
+            color: var(--yellow);
+        }
+
+        .cta-btn-text {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .cta-btn-text:hover {
+            color: var(--yellow);
+        }
+
+        .cta-card.featured .cta-btn-outline {
+            border-color: var(--black);
+            color: var(--black);
+        }
+
+        .cta-card.featured .cta-btn-outline:hover {
+            background: var(--black);
+            color: var(--yellow);
+        }
+
+        /* Resources Row */
+        .resources-row {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .resource-link {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.3s;
+        }
+
+        .resource-link:hover {
+            color: var(--yellow);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            padding: 3rem 2rem 2rem;
+            border-top: 1px solid rgba(255, 194, 0, 0.1);
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .footer-brand {
+            color: #fff;
+        }
+
+        .footer-brand .logo {
+            margin-bottom: 1rem;
+            display: inline-flex;
+        }
+
+        .footer-brand p {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        .footer-links h4 {
+            color: var(--yellow);
+            font-size: 0.9rem;
+            margin-bottom: 1.25rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--yellow);
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 3rem auto 0;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-bottom p {
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 0.85rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255, 194, 0, 0.1);
+            color: var(--yellow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            background: var(--yellow);
+            color: var(--black);
+        }
+
+        /* Back to Top */
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            background: var(--yellow);
+            color: var(--black);
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+            z-index: 998;
+            box-shadow: 0 4px 20px rgba(255, 194, 0, 0.3);
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(255, 194, 0, 0.4);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .modules-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .module-card.expanded {
+                grid-column: 1;
+            }
+
+            .flow-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .flow-arrow {
+                display: none !important;
+            }
+
+            .footer-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .overview-container {
+                min-width: auto;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .overview-connector {
+                display: none;
+            }
+
+            .hero {
+                padding-top: 6rem;
+            }
+
+            .system-overview {
+                padding: 2rem 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .module-header {
+                padding: 1.25rem;
+            }
+
+            .module-inner {
+                padding: 0 1.25rem 1.5rem;
+            }
+
+            .cta-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--black);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--yellow);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #e6b000;
+        }
+    </style>
+</head>
+<body>
+    <!-- Progress Bar -->
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <i class="fas fa-rocket"></i>
+                Ferdy Capizeño VA Training
+            </a>
+            <ul class="nav-links">
+                <li><a href="#modules">Modules</a></li>
+                <li><a href="#flow">System Flow</a></li>
+                <li><a href="#cta">Resources</a></li>
+                <li><a href="https://brihafe.github.io/portfolioform" target="_blank" class="nav-cta">Get My Website</a></li>
+            </ul>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <i class="fas fa-bolt"></i>
+                Complete Execution System for Virtual Assistants
+            </div>
+            <h1>
+                The VA Client
+                <span>Acquisition System</span>
+            </h1>
+            <p class="hero-subtitle">Step-by-Step Workflow to Get Clients Online</p>
+            <p class="hero-text">You don't need luck. You need a system that consistently brings clients to you. This is not a course. This is a complete operating system for landing your first — or next — VA client.</p>
+            <a href="#modules" class="hero-cta">
+                Start the System
+                <i class="fas fa-arrow-right"></i>
+            </a>
+            <div class="social-proof">
+                <div class="avatar-group">
+                    <div class="avatar">FC</div>
+                    <div class="avatar">MK</div>
+                    <div class="avatar">JL</div>
+                    <div class="avatar">+</div>
+                </div>
+                <p class="social-proof-text">Used by <strong>500+ Filipino VAs</strong> to land their first online clients</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- System Overview Bar -->
+    <section class="system-overview">
+        <div class="overview-container">
+            <div class="overview-item active" onclick="scrollToModule(0)">
+                <div class="overview-node">01</div>
+                <div class="overview-label">Foundation</div>
+                <div class="overview-sublabel">Setup</div>
+            </div>
+            <div class="overview-connector"></div>
+            <div class="overview-item" onclick="scrollToModule(1)">
+                <div class="overview-node">02</div>
+                <div class="overview-label">Sample Work</div>
+                <div class="overview-sublabel">No Experience</div>
+            </div>
+            <div class="overview-connector"></div>
+            <div class="overview-item" onclick="scrollToModule(2)">
+                <div class="overview-node">03</div>
+                <div class="overview-label">Portfolio</div>
+                <div class="overview-sublabel">System</div>
+            </div>
+            <div class="overview-connector"></div>
+            <div class="overview-item" onclick="scrollToModule(3)">
+                <div class="overview-node">04</div>
+                <div class="overview-label">Find Clients</div>
+                <div class="overview-sublabel">Online</div>
+            </div>
+            <div class="overview-connector"></div>
+            <div class="overview-item" onclick="scrollToModule(4)">
+                <div class="overview-node">05</div>
+                <div class="overview-label">Outreach</div>
+                <div class="overview-sublabel">System</div>
+            </div>
+            <div class="overview-connector"></div>
+            <div class="overview-item" onclick="scrollToModule(5)">
+                <div class="overview-node">06</div>
+                <div class="overview-label">CRM Tracker</div>
+                <div class="overview-sublabel">& Follow-Up</div>
+            </div>
+            <div class="overview-connector"></div>
+            <div class="overview-item" onclick="scrollToModule(6)">
+                <div class="overview-node">07</div>
+                <div class="overview-label">Close Clients</div>
+                <div class="overview-sublabel">Discovery Call</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modules Section -->
+    <section class="modules-section" id="modules">
+        <div class="section-header">
+            <h2>7 System Modules</h2>
+            <p>Click any module to expand the full training content. Work through them in order — each one builds on the last.</p>
+        </div>
+
+        <div class="modules-grid" id="modulesGrid">
+            <!-- Module 01 -->
+            <div class="module-card" data-module="0">
+                <div class="module-header" onclick="toggleModule(this)">
+                    <div class="module-number">01</div>
+                    <div class="module-title-group">
+                        <h3 class="module-title">Foundation Setup</h3>
+                        <p class="module-goal">"Set Up Your Digital Presence to Look Like a Professional VA"</p>
+                    </div>
+                    <button class="module-toggle">
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                </div>
+                <div class="module-preview">
+                    Before you reach out to anyone, your online profiles must already tell a compelling story. Clients search you. Clients judge you before they reply. This module makes sure you look like a professional they can trust.
+                </div>
+                <div class="module-content">
+                    <div class="module-inner">
+                        <div class="content-block">
+                            <h4><i class="fas fa-bullseye"></i> Goal</h4>
+                            <p>Before you reach out to anyone, your online profiles must already tell a compelling story. Clients search you. Clients judge you before they reply. This module makes sure you look like a professional they can trust.</p>
+                        </div>
+
+                        <div class="content-block">
+                            <h4><i class="fas fa-heading"></i> Step 1: Set Your Positioning Headline</h4>
+                            <p>Your headline is the first thing a potential client sees. It must do 3 things:</p>
+                            <ul>
+                                <li>Say WHO you help</li>
+                                <li>Say WHAT you do for them</li>
+                                <li>Use words they use (not jargon)</li>
+                            </ul>
+                            <p><strong>Headline Formula:</strong></p>
+                            <div class="example-box">[Role] | Helping [Target Niche] [Result You Deliver]</div>
+                            <p><strong>Real Examples:</strong></p>
+                            <div class="example-box good">✅ Virtual Assistant | Helping Coaches Manage Content & Admin So They Can Focus on Clients
+✅ VA & Social Media Manager | Supporting Online Business Owners with Daily Operations
+✅ Executive Virtual Assistant | Helping Busy Entrepreneurs Reclaim 10+ Hours Per Week
+✅ Social Media VA | Creating and Scheduling Content for Coaches and Course Creators
+✅ Bookkeeping VA | Helping Small Business Owners Stay Organized and Audit-Ready</div>
+                            <p><strong>What NOT to write:</strong></p>
+                            <div class="example-box bad">❌ Virtual Assistant (too vague — every VA uses this)
+❌ Freelancer | Open to Opportunities (sounds desperate, no positioning)
+❌ Hardworking VA Looking for Clients (makes it about you, not them)</div>
+                        </div>
+
+                        <div class="content-block">
+                            <h4><i class="fab fa-linkedin"></i> Step 2: Optimize Your LinkedIn Profile</h4>
+                            <p><strong>LinkedIn is your #1 B2B client magnet.</strong> Here is the exact setup:</p>
+
+                            <p><strong>A. PROFILE PHOTO</strong></p>
+                            <ul>
+                                <li>Use a clear, bright, solo photo — face forward, smile, clean background</li>
+                                <li>Avoid dark selfies, group photos, or pet photos</li>
+                                <li>Wear something professional (smart casual is fine)</li>
+                                <li>Free tool: Remove.bg for background removal</li>
+                            </ul>
+
+                            <p><strong>B. BANNER IMAGE (LinkedIn Cover)</strong></p>
+                            <ul>
+                                <li>Size: 1584 x 396 px</li>
+                                <li>Include: Your name + role, 1–2 services, short tagline, website/Calendly link</li>
+                                <li>Free tool: Canva (search "LinkedIn Banner" template)</li>
+                                <li>Color: Use your brand colors. Yellow + Black works perfectly here.</li>
+                            </ul>
+                            <div class="example-box">Ferdinand Cortel
+Virtual Assistant | Social Media Manager
+📅 Schedule a Free Discovery Call → [link]</div>
+
+                            <p><strong>C. ABOUT SECTION (STRUCTURE)</strong></p>
+                            <p>Write this in 3 short paragraphs:</p>
+                            <div class="template-box">Paragraph 1 — Who you serve and what you do:
+"I help online coaches and small business owners take back their time by managing the admin and content tasks that eat up their day. If you're spending hours on scheduling, posting, and organizing instead of serving clients — that's where I come in."
+
+Paragraph 2 — What you specifically do:
+"Services I offer:
+→ Social Media Management (content creation, scheduling, engagement)
+→ Email & Calendar Management
+→ Canva graphic design for social and marketing
+→ Research, data entry, and admin support
+→ CRM and lead tracking setup"
+
+Paragraph 3 — CTA:
+"If you're a coach or business owner who needs reliable VA support, let's connect. Visit my portfolio at [yourwebsite.com] or send me a message directly here on LinkedIn."</div>
+
+                            <p><strong>D. FEATURED SECTION</strong></p>
+                            <ul>
+                                <li>Pin your portfolio website link here</li>
+                                <li>Pin a case study or sample project PDF</li>
+                                <li>Pin a post where you introduced yourself + your services</li>
+                            </ul>
+
+                            <p><strong>E. EXPERIENCE SECTION</strong></p>
+                            <p>Even if you have no VA experience, write your freelance journey as a business:</p>
+                            <div class="example-box">Position: Virtual Assistant & Social Media Manager
+Company: [Your Name] — Freelance
+Dates: [Start date] – Present
+
+"Providing VA and SMM services to coaches and entrepreneurs. Specializing in content creation, scheduling, admin support, and social media management. Portfolio: [link]"</div>
+                        </div>
+
+                        <div class="content-block">
+                            <h4><i class="fab fa-facebook"></i> Step 3: Optimize Your Facebook Profile</h4>
+                            <p>Many Filipino business owners use Facebook as their primary platform. Your profile must look clean and professional.</p>
+                            <div class="checklist">
+                                <div class="checklist-item"><i class="fas fa-check-circle"></i><span>Profile photo: same as LinkedIn — bright, clean, professional</span></div>
+                                <div class="checklist-item"><i class="fas fa-check-circle"></i><span>Cover photo: Simple banner with your name + services</span></div>
+                                <div class="checklist-item"><i class="fas fa-check-circle"></i><span>Bio: "Virtual Assistant | Helping coaches and businesses with content, admin, and social media | [website link]"</span></div>
+                                <div class="checklist-item"><i class="fas fa-check-circle"></i><span>Work section: Add your freelance work</span></div>
+                                <div class="checklist-item"><i class="fas fa-check-circle"></i><span>Featured photos: Remove party/unrelated photos</span></div>
+                                <div class="checklist-item"><i class="fas fa-check-circle"></i><span>Set "Add Friend" button visible</span></div>
+                                <div class="checklist-item"><i class="fas fa-check-circle"></i><span>Post a pinned intro post</span></div>
+                            </div>
+                            <p><strong>Pinned Intro Post Template:</strong></p>
+                            <div class="template-box">👋 If you're new here — Hi! I'm [Name].
+
+I'm a Virtual Assistant and Social Media Manager helping coaches and online business owners with:
+
+📌 Content creation & scheduling
+📌 Email and calendar management
+📌 Admin support & CRM tracking
+📌 Canva graphics
+
+If you're a busy business owner who wants to stop drowning in tasks and start focusing on your clients — I'd love to connect!
+
+🔗 See my portfolio here: [link]
+📩 DM me or comment "INFO" and I'll reach out!</div>
+                        </div>
+
+                        <div class="content-block">
+                            <h4><i class="fab fa-instagram"></i> Step 4: Optimize Your Instagram (Optional But Powerful)</h4>
+                            <ul>
+                                <li>Username: Make it your real name or brand name (not random numbers)</li>
+                                <li>Bio format: Virtual Assistant 🖥️ | Helping coaches & entrepreneurs manage content + admin | 📁 Portfolio → [link in bio] | 📩 DM for inquiries</li>
+                                <li>Feed: Post 3–6 sample work posts + testimonials before outreaching</li>
+                                <li>Story Highlights: Create folders for "Services", "My Work", "About Me", "Testimonials"</li>
+                            </ul>
+                        </div>
+
+                        <div class="activity-banner">
+                            <i class="fas fa-fire"></i>
+                            <span>ACTIVITY: Rewrite your LinkedIn headline, update your LinkedIn About section using the 3-paragraph framework, and update your Facebook bio + pin an intro post. Take screenshots when done.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Module 03 -->
+            <div class="module-card" data-module="1">
+                <div class="module-header" onclick="toggleModule(this)">
+                    <div class="module-number">02</div>
+                    <div class="module-title-group">
+                        <h3 class="module-title">Sample Project System</h3>
+                        <p class="module-goal">"Build Proof of Work — Even Without a Single Client"</p>
+                    </div>
+                    <button class="module-toggle">
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                </div>
+                <div class="module-preview">
+                    The #1 excuse that stops VAs from applying: "I have no experience." This module eliminates that excuse forever. You will build 3 real-looking sample projects that prove your skills — no client required.
+                </div>
+                <div class="module-content">
+                    <div class="module-inner">
+                        <div class="content-block">
+                            <h4><i class="fas fa-bullseye"></i> Goal</h4>
+                            <p>The #1 excuse that stops VAs from applying: "I have no experience." This module eliminates that excuse forever. You will build 3 real-looking sample projects that prove your skills — no client required.</p>
+                            <p><strong>The secret:</strong> Clients don't care if it was paid work. They care if you can DO the work. A mock project done well looks identical to a real one.</p>
+                        </div>
+
+                        <div class="content-block">
+                            <h4><i class="fas fa-question-circle"></i> What Is a Sample Project?</h4>
+                            <p>A sample project is a piece of work you created for a fictional (or real, unpaid) business — specifically to show a potential client what they'd get if they hired you.</p>
+                            <p><strong>It must:</strong></p>
+                            <ul>
+                                <li>Look polished and professional</li>
+                                <li>Solve a real business problem</li>
+                                <li>Be relevant to your niche</li>
+                                <li>Be presentable in your portfolio and in DMs</li>
+                            </ul>
+                        </div>
+
+                        <div class="content-block">
+                            <h4><i class="fas fa-hashtag"></i> FOR: Social Media Management</h4>
+                            <p><strong>Project Title:</strong> "30-Day Instagram Content Plan for a Fitness Coach"</p>
+                            <p><strong>What to create:</strong></p>
+                            <ul>
+                                <li>A content calendar in Google Sheets with 30 days of post ideas (Date, Content Type, Caption, Hashtags, Status)</li>
+                                <li>6 Canva graphics for the fictional brand (1080x1080px): 2 motivational quotes, 2 tip/value posts, 2 promotional posts</li>
+                                <li>A 1-page "Content Strategy Overview" PDF with target audience, content pillars, posting frequency, tools recommended</li>
+                            </ul>
+                            <p><strong>Fictional brand:</strong> "FitWith Maria" — an online fitness coach for busy working moms</p>
+                        </div>
+
+                        <div class="content-block">
+                            <h4><i class="fas fa-envelope"></i> FOR: Email Management</h4>
+                            <p><strong>Project Title:</strong> "Email Management & Inbox Organization System for an Online Coach"</p>
+                            <p><strong>What to create:</strong></p>
+                            <ul>
+                                <li>A Gmail label system (screenshot or Loom walkthrough): Labels for Clients, Leads, Invoices, Newsletters, Urgent, Follow-Up + auto-filters</li>
+                                <li>5 email reply templates: Discovery call confirmation, Inquiry response, Follow-up after no reply, Payment received acknowledgment, "I'll get back to you" placeholder</li>
+                                <li>An email tracker in Google Sheets (Sender, Subject, Date, Priority, Status, Notes)</li>
+                            </ul>
+                            <p><strong>Fictional brand:</strong> "Coach Sarah Rivera" — a life coach managing 50+ emails/day</p>
+                        </div>
+
+                        <div class="content-block">
+                            <h4><i class="fas fa-table"></i> FOR: Admin Support / Data Entry</h4>
+                            <p><strong>Project Title:</strong> "Lead Tracker + CRM System Setup for a Network Marketer"</p>
+                            <p><strong>What to create:</strong></p>
+                            <ul>
+                                <li>Google Sheets CRM tracker with columns: Name | Platform | Contact Info | Date Contacted | Message Sent | Response | Status | Follow-Up Date | Notes</li>
+                                <li>Populate with 10 fictional leads (realistic names, platforms, statuses)</li>
+                                <li>A 1-page "How to Use Your CRM" guide with color coding (Green = client, Yellow = warm lead, Red = no response)</li>
+                            </ul>
+                            <p><strong>Fictional brand:</strong> "Mark's Network Marketing Team" — MLM leader managing 50+ leads a week</p>
+                        </div>
+
+                        <div class="content-block">
+                            <h4><i class="fas fa-paint-brush"></i> FOR: Canva / Graphic Design</h4>
+                            <p><strong>Project Title:</strong> "Brand Kit + Social Media Templates for a Business Coach"</p>
+                            <p><strong>What to create:</strong></p>
+                            <ul>
+                                <li>A brand kit Canva file with logo, color palette (3–4 colors + hex codes), typography pairing, brand voice description</li>
+                                <li>3 Instagram post templates (quote template, tips carousel, promotional post)</li>
+                                <li>3 Story templates ("New post", Poll/engagement, "Book a call")</li>
+                            </ul>
+                            <p>Export as PNG + PDF and add to portfolio.</p>
+                        </div>
+
+                        <div class="content-block">
+                            <h4><i class="fas fa-recycle"></i> FOR: Content Repurposing VA</h4>
+                            <p><strong>Project Title:</strong> "YouTube Video → Full Content Suite Repurposing Example"</p>
+                            <p>Take a real YouTube video and repurpose it into:</p>
+                            <ul>
+                                <li>A written blog post (600–800 words, formatted with H2/H3 headings)</li>
+                                <li>5 Instagram caption posts with relevant quotes from the video</li>
+                                <li>3 Twitter/X posts (short punchy takeaways)</li>
+                                <li>1 LinkedIn article intro (200 words)</li>
+                                <li>1 email newsletter draft (for the video's audience)</li>
+                            </ul>
+                            <p>Label it: "Content Repurposing Sample — [Video Topic]"</p>
+                        </div>
+
+                        <div class="content-block">
+                            <h4><i class="fas fa-presentation"></i> How to Present Your Sample Projects</h4>
+                            <div class="template-box">PROJECT CARD FORMAT:
+
+Title: [Project Name]
+Client Type: [e.g. "Fitness Coach — Sample Project"]
+Problem Solved: [1 sentence]
+What I Did: [3–5 bullet points]
+Result / Deliverable: [What the client would receive]
+[Screenshot or mockup image]
+[View Full Project button → PDF or Canva link]</div>
+                        </div>
+
+                        <div class="activity-banner">
+                            <i class="fas fa-fire"></i>
+                            <span>ACTIVITY: Create 1 complete sample project in your niche. Build the deliverable, export it as a PDF or set of images, and add it to your portfolio website. This is your proof of work.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Module 02 -->
+            <div class="module-card" data-module="2">
+                <div class="module-header" onclick="toggleModule(this)">
+                    <div class="module-number">03</div>
+                    <div class="module-title-group">
+                        <h3 class="module-title">Portfolio Website System</h3>
+                        <p class="module-goal">"Build Instant Trust and Authority Before You Even Pitch"</p>
+                    </div>
+                    <button class="module-toggle">
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                </div>
+                <div class="module-preview">
+                    When a client receives your DM, the first thing they will do is search your name or click your link. If nothing shows up — or worse, it shows a blank Linktree — you lose credibility instantly. A portfolio website makes you look like a business, not a beginner.
+                </div>
+                <div class="module-content">
+                    <div class="module-inner">
+                        <div class="content-block">
+                            <h4><i class="fas fa-bullseye"></i> Goal</h4>
+                            <p>When a client receives your DM, the first thing they will do is search your name or click your link. If nothing shows up — or worse, it shows a blank Linktree — you lose credibility instantly. A portfolio website makes you look like a business, not a beginner.</p>
+                            <p><em>Without a website: "Who is this person?"<br>With a website: "Oh wow, they look legit. Let me read more."</em></p>
+                        </div>
+
+                        <div class="content-block">
+                            <h4><i class="fas fa-home"></i> PAGE 1: HOME</h4>
+                            <ul>
+                                <li>Your name + role (headline)</li>
+                                <li>1-sentence value proposition</li>
+                                <li>CTA button: "View My Portfolio" or "Book a Discovery Call"</li>
+                                <li>Professional photo</li>
+                                <li>3 icons showing your top services</li>
+                                <li>Strip of logos (tools you use: Canva, Hootsuite, Notion, Trello, etc.)</li>
+                            </ul>
+                        </div>
+
+                        <div class="content-block">
+                            <h4><i class="fas fa-user"></i> PAGE 2: ABOUT</h4>
+                            <p>Tell your story in 3 sections:</p>
+                            <div class="template-box">Section A — Who you are:
+"Hi, I'm [Name], a Virtual Assistant and Social Media Manager based in the Philippines. I help coaches and online entrepreneurs manage their content, admin tasks, and social media so they can focus on growing their business."
+
+Section B — Why you do this:
+"I started as a [previous job/student] and discovered that many business owners spend more time managing tasks than actually serving clients. I built my skills in [skills] so I could become the behind-the-scenes support system they need."
+
+Section C — What you're best at:
+"I specialize in:
+→ Social Media Management
+→ Email and Calendar Management
+→ Content Creation (Canva, Captions, Reels scripts)
+→ Admin Support and Data Entry
+→ CRM and Lead Tracking (Notion, Google Sheets)"</div>
+                        </div>
+
+                        <div class="content-block">
+                            <h4><i class="fas fa-briefcase"></i> PAGE 3: SERVICES</h4>
+                            <p>List each service as a card. Each card should include service name, 3–5 bullet points of what's included, and optional price range.</p>
+                            <div class="example-box"><strong>SERVICE 1: Social Media Management</strong>
+✔ Content calendar creation (monthly)
+✔ Captions + hashtag research
+✔ Graphic design (Canva)
+✔ Scheduling via Buffer/Later/Hootsuite
+✔ Monthly analytics report
+
+<strong>SERVICE 2: Email & Calendar Management</strong>
+✔ Inbox organization and labeling
+✔ Reply drafting (based on your voice/tone)
+✔ Meeting scheduling + calendar blocking
+✔ Follow-up reminders
+
+<strong>SERVICE 3: Admin Virtual Assistance</strong>
+✔ Data entry and spreadsheet management
+✔ Research tasks (lead lists, competitor analysis)
+✔ File organization (Google Drive, Dropbox)
+✔ CRM data entry and updates
+✔ Light bookkeeping or invoicing support
+
+<strong>SERVICE 4: Content Creation Support</strong>
+✔ Canva graphics (posts, stories, banners)
+✔ Blog post formatting and uploading
+✔ Short-form video scripts (Reels/TikTok)
+✔ Repurposing long-form content into short posts</div>
+                        </div>
+
+                        <div class="content-block">
+                            <h4><i class="fas fa-images"></i> PAGE 4: PORTFOLIO / SAMPLE WORK</h4>
+                            <p>Show 3–6 sample projects. Each project card should have:</p>
+                            <ul>
+                                <li>Project title</li>
+                                <li>The problem it solves</li>
+                                <li>What you created</li>
+                                <li>Screenshot or mockup</li>
+                            </ul>
+                            <p><em>Note: If you have no real clients yet, use sample/mock projects (see Module 03)</em></p>
+                        </div>
+
+                        <div class="content-block">
+                            <h4><i class="fas fa-star"></i> PAGE 5: TESTIMONIALS</h4>
+                            <p>Even without clients, you can add:</p>
+                            <ul>
+                                <li>A quote from a training mentor or coach</li>
+                                <li>A quote from someone you helped for free</li>
+                                <li>A quote from a family member's business you helped with</li>
+                            </ul>
+                            <div class="template-box">"Hi [Name], I'm building my VA portfolio and I was hoping I could ask a small favor. If you're willing, could you write 2–3 sentences about what it was like working with me or what you think of my skills/work ethic? It doesn't have to be long — just genuine. I'll be using it on my portfolio website. Thank you so much!"</div>
+                        </div>
+
+                        <div class="content-block">
+                            <h4><i class="fas fa-envelope"></i> PAGE 6: CONTACT / BOOK A CALL</h4>
+                            <ul>
+                                <li>Contact form (name, email, message)</li>
+                                <li>Calendly embed (for discovery calls)</li>
+                                <li>Your email address</li>
+                                <li>Your social media links</li>
+                            </ul>
+                        </div>
+
+                        <div class="content-block">
+                            <h4><i class="fas fa-tools"></i> TOOLS TO BUILD YOUR PORTFOLIO WEBSITE</h4>
+                            <table>
+                                <tr>
+                                    <th>Tool</th>
+                                    <th>Price</th>
+                                    <th>Best For</th>
+                                </tr>
+                                <tr>
+                                    <td>Carrd.co</td>
+                                    <td>Free / $9/yr</td>
+                                    <td>Simple, fast 1-page site</td>
+                                </tr>
+                                <tr>
+                                    <td>Wix</td>
+                                    <td>Free / $14/mo</td>
+                                    <td>More pages, design freedom</td>
+                                </tr>
+                                <tr>
+                                    <td>WordPress.com</td>
+                                    <td>Free / $4/mo</td>
+                                    <td>Professional multi-page site</td>
+                                </tr>
+                                <tr>
+                                    <td>Notion + Super.so</td>
+                                    <td>$16/mo</td>
+                                    <td>Modern, minimal look</td>
+                                </tr>
+                                <tr>
+                                    <td>GitHub Pages</td>
+                                    <td>Free</td>
+                                    <td>If you know basic HTML/CSS</td>
+                                </tr>
+                            </table>
+                            <p><strong>Recommended for beginners:</strong> Carrd.co for speed, Wix for more design control.</p>
+                        </div>
+
+                        <div class="activity-banner">
+                            <i class="fas fa-fire"></i>
+                            <span>ACTIVITY: Build your portfolio website with at minimum: Home, About, Services, and Contact pages. Share the link with 3 people for feedback before you start outreach.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Module 04 -->
+            <div class="module-card" data-module="3">
+                <div class="module-header" onclick="toggleModule(this)">
+                    <div class="module-number">04</div>
+                    <div class="module-title-group">
+                        <h3 class="module-title">Client Acquisition Strategy</h3>
+                        <p class="module-goal">"Know Exactly Where Your Clients Are and What They Need"</p>
+                    </div>
+                    <button class="module-toggle">
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                </div>
+                <div class="module-preview">
+                    Most VAs waste time searching randomly for clients. This module shows you exactly WHERE your clients are hiding and HOW to identify the ones who are actively looking.
+                </div>
+                <div class="module-content">
+                    <div class="module-inner">
+                        <div class="content-block">
+                            <h4><i class="fas fa-bullseye"></i> Goal</h4>
+                            <p>Most VAs waste time searching randomly for clients. This module shows you exactly WHERE your clients are hiding and HOW to identify the ones who are actively looking.</p>
+                        </div>
+
+                        <div class="content-block">
+                            <h4><i class="fab fa-facebook"></i> PLATFORM 1: FACEBOOK GROUPS</h4>
+                            <p>This is the highest-volume source for Filipino VAs targeting coaches and entrepreneurs.</p>
+                            <p><strong>Top Facebook Groups to Join:</strong></p>
+                            <table>
+                                <tr>
+                                    <th>Group Type</th>
+                                    <th>Example Group Names</th>
+                                </tr>
+                                <tr>
+                                    <td>Business Owners (PH)</td>
+                                    <td>Business Owners Philippines, Filipino Entrepreneurs Network, OFW Business Owners</td>
+                                </tr>
+                                <tr>
+                                    <td>Coaches + Consultants</td>
+                                    <td>Online Coaches Community, Life Coaches Philippines, Business Coaches Mastermind</td>
+                                </tr>
+                                <tr>
+                                    <td>Network Marketing</td>
+                                    <td>Network Marketers Philippines, MLM Leaders Community</td>
+                                </tr>
+                                <tr>
+                                    <td>Online Sellers</td>
+                                    <td>Shopee / Lazada Sellers Community, Dropshippers Philippines</td>
+                                </tr>
+                                <tr>
+                                    <td>Real Estate</td>
+                                    <td>Real Estate Agents Philippines, Real Estate Investors Group</td>
+                                </tr>
+                                <tr>
+                                    <td>General Entrepreneurs</td>
+                                    <td>Negosyante Philippines, Freelancers and Entrepreneurs PH</td>
+                                </tr>
+                            </table>
+                            <p><strong>How to Find Pain Points in Facebook Groups:</strong></p>
+                            <p>Use Facebook Group search and type keywords like:</p>
+                            <div class="example-box">"need help with"
+"looking for someone to"
+"overwhelmed with"
+"does anyone know how to"
+"need a VA"
+"looking for a virtual assistant"
+"anyone offer social media"
+"I'm swamped"</div>
+                            <p>When you find a post like: <em>"I'm a coach and I'm struggling to post consistently on Instagram. Anyone know a good social media manager?"</em></p>
+                            <p><strong>That's a buyer, not a browser. Message them immediately.</strong></p>
+                        </div>
+
+                        <div class="content-block">
+                            <h4><i class="fab fa-linkedin"></i> PLATFORM 2: LINKEDIN</h4>
+                            <p>Best for: corporate clients, consultants, course creators, coaches</p>
+                            <p><strong>What to do on LinkedIn:</strong></p>
+                            <ul>
+                                <li>Use the search bar and type: "coach", "consultant", "online business owner", "course creator"</li>
+                                <li>Filter by: 1st and 2nd connections</li>
+                                <li>Look at their profiles for signals: inconsistent posting, no portfolio website, mentions of being "busy" or "overwhelmed"</li>
+                                <li>Check if they commented under posts about productivity or outsourcing</li>
+                            </ul>
+                            <p><strong>LinkedIn Search Strings:</strong></p>
+                            <div class="example-box">"looking to hire VA"
+"hiring virtual assistant"
+"need social media help"
+"overwhelmed with admin"
+"trying to scale my coaching business"</div>
+                        </div>
+
+                        <div class="content-block">
+                            <h4><i class="fab fa-instagram"></i> PLATFORM 3: INSTAGRAM</h4>
+                            <p>Best for: coaches, creators, influencers, fitness/wellness brands</p>
+                            <p><strong>How to find clients:</strong></p>
+                            <ul>
+                                <li>Search hashtags: #coach, #businesscoach, #lifecoach, #onlinecoach, #entrepreneurlife</li>
+                                <li>Look for accounts with 1,000–20,000 followers (sweet spot)</li>
+                                <li>Scroll their feed — look for inconsistent posting, low-quality graphics, or posts that just stopped</li>
+                                <li>Check their bio — "DM for coaching" but no link? They need a VA.</li>
+                            </ul>
+                            <p><strong>Red flags that signal they NEED a VA:</strong></p>
+                            <ul>
+                                <li>Their last post was 3 weeks ago</li>
+                                <li>Their captions are short and rushed-looking</li>
+                                <li>Their stories are unpolished / just iPhone photos</li>
+                                <li>They're replying to every comment manually (means no team)</li>
+                                <li>They have a Calendly link but no website</li>
+                            </ul>
+                        </div>
+
+                        <div class="content-block">
+                            <h4><i class="fab fa-twitter"></i> PLATFORM 4: TWITTER / X</h4>
+                            <p>Search for:</p>
+                            <div class="example-box">"looking for a VA"
+"need a virtual assistant"
+"hiring SMM"
+"does anyone know a good VA"
+"anyone recommend an SMM"</div>
+                        </div>
+
+                        <div class="content-block">
+                            <h4><i class="fas fa-thermometer-half"></i> How to Identify "Hot" Leads vs. Cold Leads</h4>
+                            <table>
+                                <tr>
+                                    <th>Signal</th>
+                                    <th>Lead Temperature</th>
+                                </tr>
+                                <tr>
+                                    <td>Posted asking for a VA or SMM</td>
+                                    <td>🔥 HOT — Message now</td>
+                                </tr>
+                                <tr>
+                                    <td>Posting consistently but mentioned stress/burnout</td>
+                                    <td>🔥 HOT — Warm outreach</td>
+                                </tr>
+                                <tr>
+                                    <td>Has a business, active but inconsistent content</td>
+                                    <td>🟡 WARM — Engage first, pitch after</td>
+                                </tr>
+                                <tr>
+                                    <td>Has a business but hasn't posted in 60+ days</td>
+                                    <td>🟡 WARM — Research first</td>
+                                </tr>
+                                <tr>
+                                    <td>Business owner, no signs of needing help</td>
+                                    <td>❄️ COLD — Skip or educate first</td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class="activity-banner">
+                            <i class="fas fa-fire"></i>
+                            <span>ACTIVITY: Join 5 Facebook groups where your ideal clients are active. Search for the keywords listed above. Find 3 posts where someone expressed a need for VA/SMM services. Screenshot them and add to your lead tracker (Module 06).</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Module 05 -->
+            <div class="module-card" data-module="4">
+                <div class="module-header" onclick="toggleModule(this)">
+                    <div class="module-number">05</div>
+                    <div class="module-title-group">
+                        <h3 class="module-title">Outreach System</h3>
+                        <p class="module-goal">"Start Conversations That Turn Into Clients"</p>
+                    </div>
+                    <button class="module-toggle">
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                </div>
+                <div class="module-preview">
+                    Getting clients is a numbers and quality game. This module teaches you 2 outreach methods — Direct Pitch and Warm Lead Approach — with real, tested DM scripts you can copy and personalize immediately.
+                </div>
+                <div class="module-content">
+                    <div class="module-inner">
+                        <div class="content-block">
+                            <h4><i class="fas fa-bullseye"></i> Goal</h4>
+                            <p>Getting clients is a numbers and quality game. This module teaches you 2 outreach methods — Direct Pitch and Warm Lead Approach — with real, tested DM scripts you can copy and personalize immediately.</p>
+                        </div>
+
+                        <div class="content-block">
+                            <h4><i class="fas fa-paper-plane"></i> METHOD A: DIRECT PITCH APPROACH</h4>
+                            <p>Use when: The person posted that they're looking for a VA / SMM, or their bio + content clearly shows they need support.</p>
+                            <p><strong>When to send:</strong> Within 24 hours of seeing the post.</p>
+                            <p><strong>The formula:</strong></p>
+                            <ol style="padding-left: 1.5rem; margin-bottom: 1rem;">
+                                <li>Open with their name (personalization)</li>
+                                <li>Reference how you found them</li>
+                                <li>State what you do + who you help (brief)</li>
+                                <li>Give them one reason to trust you (portfolio, past experience, sample work)</li>
+                                <li>Light CTA — not "hire me" but "let's explore if I can help"</li>
+                            </ol>
+
+                            <p><strong>Template 1 — Responding to a post asking for a VA:</strong></p>
+                            <div class="template-box">Hi [Name]! I saw your post in [Group Name] looking for a VA — great timing!
+
+I'm a Virtual Assistant specializing in [social media management / admin support / email management] and I work specifically with [coaches / business owners / online sellers].
+
+I've put together a portfolio here so you can get a feel for how I work:
+👉 [your website link]
+
+If you're open to it, I'd love to have a quick 15-minute chat to see if I'd be a good fit for what you need. No pressure — just a conversation!
+
+Looking forward to hearing from you 😊</div>
+
+                            <p><strong>Template 2 — Cold but targeted direct pitch:</strong></p>
+                            <div class="template-box">Hi [Name]! I came across your page and love what you're building with [their business/brand].
+
+I'm a VA and Social Media Manager who helps coaches like you manage content and admin so you can focus on your clients instead of your inbox.
+
+I actually put together some sample work that shows exactly what I do:
+👉 [portfolio link]
+
+Would you be open to a quick call to explore if I can support your business?
+Happy to share more details!</div>
+
+                            <p><strong>Template 3 — Facebook Group DM after seeing a pain point post:</strong></p>
+                            <div class="template-box">Hey [Name]! I saw your post in [Group Name] about [specific problem they mentioned — e.g. "struggling to keep up with posting while running your coaching program"].
+
+That's exactly the kind of thing I help coaches solve! I handle the content planning, graphics, and scheduling so you can stay visible without it taking over your schedule.
+
+Here's my portfolio so you can see my work:
+👉 [link]
+
+Want to hop on a quick call this week? 😊</div>
+                        </div>
+
+                        <div class="content-block">
+                            <h4><i class="fas fa-heart"></i> METHOD B: WARM LEAD APPROACH (Higher Conversion)</h4>
+                            <p>Use when: You've identified a potential client but they haven't directly asked for help. You build rapport before pitching.</p>
+                            <p><strong>The 3-Day Sequence:</strong></p>
+                            <ul>
+                                <li><strong>Day 1 — Engage:</strong> Like their 2–3 most recent posts. Leave a genuine comment (not "Great post!" — be specific)</li>
+                                <li><strong>Day 2 — Engage Again:</strong> Like or react to their story. Reply to their story with a short, genuine message.</li>
+                                <li><strong>Day 3 — Send the DM:</strong> Reference your engagement. Show you've been paying attention. Make it feel natural.</li>
+                            </ul>
+
+                            <p><strong>Warm Lead DM Template 1:</strong></p>
+                            <div class="template-box">Hey [Name]! I've been following your content for a couple of days and I really love the value you share — especially [reference a specific post they made].
+
+I'm a Virtual Assistant and Social Media Manager and I work specifically with coaches. I couldn't help but notice that managing content alongside everything else you're doing sounds like a lot.
+
+I actually help coaches with exactly that — taking the content and admin tasks off their plate so they can focus on coaching.
+
+Here's my portfolio so you can see what I do:
+👉 [link]
+
+Would love to chat if you're ever open to it! No pressure at all 😊</div>
+
+                            <p><strong>Warm Lead DM Template 2:</strong></p>
+                            <div class="template-box">Hey [Name]! Saw your post about [specific thing they said — e.g. "feeling stretched thin between coaching calls and content"]. I felt that!
+
+I help coaches in exactly that spot — I come in as the VA who handles all the backend stuff so you stop feeling like you're doing the work of 3 people.
+
+I put together a portfolio here if you want to peek at how I work:
+👉 [link]
+
+Happy to jump on a call whenever you're ready to explore it 😊</div>
+
+                            <p><strong>Warm Lead DM Template 3 — Instagram:</strong></p>
+                            <div class="template-box">Hi [Name]! I've been following your page for a while now and I love your message around [their niche/topic].
+
+Quick question — are you managing all your content yourself right now? I ask because I noticed your posting has been a little up and down (totally relatable as a business owner!), and I specialize in helping coaches stay consistent on social media.
+
+Here's my work if you're curious:
+👉 [portfolio link]
+
+Even if it's not the right time, happy to connect!</div>
+                        </div>
+
+                        <div class="content-block">
+                            <h4><i class="fas fa-exclamation-triangle"></i> OUTREACH RULES (ALWAYS FOLLOW)</h4>
+                            <table>
+                                <tr>
+                                    <th>Rule</th>
+                                    <th>Why</th>
+                                </tr>
+                                <tr>
+                                    <td>Always personalize — use their name and reference their content</td>
+                                    <td>Generic DMs get ignored</td>
+                                </tr>
+                                <tr>
+                                    <td>Never open with "I want to work for you"</td>
+                                    <td>It sounds desperate</td>
+                                </tr>
+                                <tr>
+                                    <td>Always include your portfolio link</td>
+                                    <td>Builds instant credibility</td>
+                                </tr>
+                                <tr>
+                                    <td>Send max 10–15 DMs per day per platform</td>
+                                    <td>Avoid spam flags</td>
+                                </tr>
+                                <tr>
+                                    <td>Keep your first DM under 120 words</td>
+                                    <td>Long first messages get ignored</td>
+                                </tr>
+                                <tr>
+                                    <td>Don't pitch in comments — DMs only</td>
+                                    <td>Comments feel public and pushy</td>
+                                </tr>
+                                <tr>
+                                    <td>Follow up once after 3–5 days if no reply</td>
+                                    <td>Most yeses come from follow-ups</td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class="content-block">
+                            <h4><i class="fas fa-redo"></i> FOLLOW-UP MESSAGE TEMPLATES</h4>
+                            <p><strong>Follow-up after no response (Day 4–5):</strong></p>
+                            <div class="template-box">Hey [Name]! Just checking in — I sent a message a few days ago about supporting your coaching business with VA and content services.
+
+Totally understand if the timing isn't right! I just wanted to make sure my message didn't get lost in notifications 😊
+
+Here's my portfolio again if you haven't seen it:
+👉 [link]
+
+Happy to chat whenever works for you!</div>
+                            <p><strong>Follow-up if they said "maybe later":</strong></p>
+                            <div class="template-box">Hi [Name]! I know you mentioned timing wasn't right when we last spoke — just wanted to circle back in case things have shifted.
+
+I have a couple of new sample projects up on my portfolio if you want to take a look at what I've been working on:
+👉 [link]
+
+No pressure at all — just keeping in touch! 😊</div>
+                        </div>
+
+                        <div class="activity-banner">
+                            <i class="fas fa-fire"></i>
+                            <span>ACTIVITY: Write your own personalized Direct Pitch DM and Warm Lead DM. Save both in a Google Doc so you can quickly customize them before sending. Then send at least 5 DMs using the warm lead approach this week.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Module 06 -->
+            <div class="module-card" data-module="5">
+                <div class="module-header" onclick="toggleModule(this)">
+                    <div class="module-number">06</div>
+                    <div class="module-title-group">
+                        <h3 class="module-title">CRM + Follow-Up Tracker</h3>
+                        <p class="module-goal">"Never Lose a Lead Again"</p>
+                    </div>
+                    <button class="module-toggle">
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                </div>
+                <div class="module-preview">
+                    Most VAs send DMs and then forget about them. Then they wonder why they're not getting clients. The truth: 80% of conversions happen after the follow-up, not the first message. This module sets up your lead tracking system.
+                </div>
+                <div class="module-content">
+                    <div class="module-inner">
+                        <div class="content-block">
+                            <h4><i class="fas fa-bullseye"></i> Goal</h4>
+                            <p>Most VAs send DMs and then forget about them. Then they wonder why they're not getting clients. The truth: <strong>80% of conversions happen after the follow-up</strong>, not the first message. This module sets up your lead tracking system.</p>
+                        </div>
+
+                        <div class="content-block">
+                            <h4><i class="fas fa-table"></i> YOUR SIMPLE CRM TRACKER (GOOGLE SHEETS)</h4>
+                            <p>Create a Google Sheet with these columns:</p>
+                            <table>
+                                <tr>
+                                    <th>Column</th>
+                                    <th>Field</th>
+                                    <th>What to Write</th>
+                                </tr>
+                                <tr>
+                                    <td>A</td>
+                                    <td>Name</td>
+                                    <td>Full name of the prospect</td>
+                                </tr>
+                                <tr>
+                                    <td>B</td>
+                                    <td>Platform</td>
+                                    <td>Facebook / LinkedIn / Instagram / Twitter</td>
+                                </tr>
+                                <tr>
+                                    <td>C</td>
+                                    <td>Profile Link</td>
+                                    <td>Direct URL to their profile/page</td>
+                                </tr>
+                                <tr>
+                                    <td>D</td>
+                                    <td>Niche</td>
+                                    <td>Coaching / Network Marketing / Real Estate / etc.</td>
+                                </tr>
+                                <tr>
+                                    <td>E</td>
+                                    <td>Date First Contacted</td>
+                                    <td>MM/DD/YYYY</td>
+                                </tr>
+                                <tr>
+                                    <td>F</td>
+                                    <td>Type of Outreach</td>
+                                    <td>Direct Pitch / Warm Lead / Replied to Post</td>
+                                </tr>
+                                <tr>
+                                    <td>G</td>
+                                    <td>Message Sent</td>
+                                    <td>Copy of the DM you sent (or brief summary)</td>
+                                </tr>
+                                <tr>
+                                    <td>H</td>
+                                    <td>Their Response</td>
+                                    <td>What they said (or "No reply")</td>
+                                </tr>
+                                <tr>
+                                    <td>I</td>
+                                    <td>Status</td>
+                                    <td>New / Warm / Interested / Booked Call / Hired / Dead Lead</td>
+                                </tr>
+                                <tr>
+                                    <td>J</td>
+                                    <td>Follow-Up Date</td>
+                                    <td>When to check back</td>
+                                </tr>
+                                <tr>
+                                    <td>K</td>
+                                    <td>Follow-Up Notes</td>
+                                    <td>What to say in your follow-up</td>
+                                </tr>
+                                <tr>
+                                    <td>L</td>
+                                    <td>Contract Sent?</td>
+                                    <td>Yes / No / N/A</td>
+                                </tr>
+                                <tr>
+                                    <td>M</td>
+                                    <td>Notes</td>
+                                    <td>Anything extra you want to remember</td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class="content-block">
+                            <h4><i class="fas fa-palette"></i> Color Coding System</h4>
+                            <ul>
+                                <li>🟢 <strong>Green row</strong> = Active client or booked discovery call</li>
+                                <li>🟡 <strong>Yellow row</strong> = Warm, interested but not yet booked</li>
+                                <li>🔵 <strong>Blue row</strong> = Waiting for reply, follow-up scheduled</li>
+                                <li>⚫ <strong>Gray row</strong> = Cold / dead lead — stop following up</li>
+                                <li>🔴 <strong>Red row</strong> = Said no — remove from active list</li>
+                            </ul>
+                        </div>
+
+                        <div class="content-block">
+                            <h4><i class="fas fa-file-alt"></i> SAMPLE FILLED CRM TRACKER ROW</h4>
+                            <div class="example-box">Name: Maria Santos
+Platform: Facebook
+Profile: facebook.com/mariasantos.coach
+Niche: Life Coaching
+Date Contacted: 05/10/2025
+Type: Warm Lead
+Message Sent: Warm approach DM — referenced her post about feeling overwhelmed
+Their Response: "Thanks for reaching out! I'm actually looking for a VA right now"
+Status: Interested
+Follow-Up Date: 05/13/2025
+Follow-Up Notes: She said she'd check my portfolio — follow up and ask if she had questions
+Contract Sent?: No
+Notes: She has 3,000 IG followers, very active in her group</div>
+                        </div>
+
+                        <div class="content-block">
+                            <h4><i class="fas fa-clock"></i> HOW OFTEN TO UPDATE YOUR CRM</h4>
+                            <ul>
+                                <li><strong>Daily:</strong> Add new leads you contacted</li>
+                                <li><strong>Every 3 days:</strong> Check follow-up dates and send follow-ups</li>
+                                <li><strong>Weekly:</strong> Review your status column — move stale leads or mark as dead</li>
+                                <li><strong>Monthly:</strong> Count your conversion rate (# of DMs sent ÷ # of calls booked = %)</li>
+                            </ul>
+                        </div>
+
+                        <div class="content-block">
+                            <h4><i class="fas fa-chart-line"></i> TRACKING YOUR OUTREACH METRICS</h4>
+                            <p>Add a separate tab called "Stats" and track:</p>
+                            <table>
+                                <tr>
+                                    <th>Metric</th>
+                                    <th>This Week</th>
+                                    <th>This Month</th>
+                                </tr>
+                                <tr>
+                                    <td>DMs Sent</td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Replies Received</td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Positive Responses</td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Discovery Calls Booked</td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Clients Hired</td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Conversion Rate</td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </table>
+                            <p><strong>Target benchmarks (realistic for beginners):</strong></p>
+                            <p>10–15 DMs/day → 1–3 replies → 1 call booked every 3–5 days → 1 client every 2 weeks</p>
+                        </div>
+
+                        <div class="activity-banner">
+                            <i class="fas fa-fire"></i>
+                            <span>ACTIVITY: Set up your CRM tracker in Google Sheets. Populate it with at least 10 leads from your Facebook Group research (Module 04). Set follow-up dates for each one.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Module 07 -->
+            <div class="module-card" data-module="6">
+                <div class="module-header" onclick="toggleModule(this)">
+                    <div class="module-number">07</div>
+                    <div class="module-title-group">
+                        <h3 class="module-title">Discovery Call Closing System</h3>
+                        <p class="module-goal">"Turn a Conversation Into a Paying Client"</p>
+                    </div>
+                    <button class="module-toggle">
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                </div>
+                <div class="module-preview">
+                    The discovery call is where you close. But most beginners either oversell, underprepare, or offer too fast without understanding what the client actually needs. This module gives you the exact script and structure to run a confident, professional discovery call.
+                </div>
+                <div class="module-content">
+                    <div class="module-inner">
+                        <div class="content-block">
+                            <h4><i class="fas fa-bullseye"></i> Goal</h4>
+                            <p>The discovery call is where you close. But most beginners either oversell, underprepare, or offer too fast without understanding what the client actually needs. This module gives you the exact script and structure to run a confident, professional discovery call.</p>
+                        </div>
+
+                        <div class="content-block">
+                            <h4><i class="fas fa-clipboard-check"></i> BEFORE THE CALL — PREPARE</h4>
+                            <p><strong>5 things to do 30 minutes before the call:</strong></p>
+                            <ol style="padding-left: 1.5rem;">
+                                <li>Review the client's social media and website (know their business)</li>
+                                <li>Have your portfolio open in another tab</li>
+                                <li>Prepare your rate sheet (your pricing, ready to share)</li>
+                                <li>Have a simple proposal template ready (Google Doc)</li>
+                                <li>Set up a note-taking doc for the call</li>
+                            </ol>
+                        </div>
+
+                        <div class="content-block">
+                            <h4><i class="fas fa-phone"></i> THE DISCOVERY CALL SCRIPT (15–30 MINUTES)</h4>
+
+                            <p><strong>OPENING (2 minutes)</strong></p>
+                            <div class="template-box">"Hi [Name], thanks so much for taking the time to meet with me! Super excited to learn more about your business and see if I can be helpful to you.
+
+Before I share anything about myself, I'd love to understand your business a bit better — is that okay? I'll only take 15–20 minutes of your time."</div>
+                            <p><em>Why this works: You're positioning yourself as a consultant, not a job applicant.</em></p>
+
+                            <p><strong>DISCOVERY QUESTIONS (8–10 minutes)</strong></p>
+                            <p>Ask these in a natural conversation flow:</p>
+                            <div class="example-box"><strong>UNDERSTANDING THEIR BUSINESS:</strong>
+"Tell me a little about what you do and who you serve."
+"How long have you been doing this? How has it been going?"
+"What does a typical week look like for you right now?"
+
+<strong>FINDING THE PAIN POINTS:</strong>
+"Where do you feel like most of your time is going right now?"
+"What tasks do you find yourself doing that you wish you didn't have to?"
+"Is there anything that keeps falling behind because you just don't have time for it?"
+"How are you currently handling [content / email / admin]?"
+
+<strong>UNDERSTANDING THEIR GOALS:</strong>
+"If you could remove 3 tasks from your plate tomorrow, what would they be?"
+"What would it mean for your business if those tasks were handled consistently?"
+"What have you tried before? Did it work?"
+
+<strong>BUDGET/READINESS SIGNAL:</strong>
+"Have you worked with a VA before? What was that experience like?"
+"Are you in a place right now where you're looking for regular support, or more of a project basis?"</div>
+
+                            <p><strong>PRESENTING YOUR SOLUTION (5 minutes)</strong></p>
+                            <div class="template-box">"Okay, so from what you've shared — it sounds like the biggest challenge right now is [specific pain point they mentioned]. And that's actually exactly what I help with.
+
+Based on what you've told me, here's what I think would make the most sense for you:
+[Present 1–2 specific services relevant to their needs]
+
+For example, I could take over [specific task] so that you're not spending [X hours] a week on it. Here's actually a sample of that exact kind of work I've done:
+[Share screen OR send portfolio link in chat]"</div>
+                        </div>
+
+                        <div class="content-block">
+                            <h4><i class="fas fa-shield-alt"></i> HANDLING OBJECTIONS</h4>
+                            <p><strong>"I'm not sure I have the budget right now":</strong></p>
+                            <div class="template-box">"I completely understand — budget is always a real consideration. What I'd suggest is we start small: even 10–15 hours a month of VA support can make a big difference and it's a very manageable investment. What would be most helpful to start with?"</div>
+
+                            <p><strong>"I need to think about it":</strong></p>
+                            <div class="template-box">"Of course! No rush at all. Can I ask — is there any specific concern I can clarify for you right now? Sometimes the hesitation is something simple I can address."</div>
+
+                            <p><strong>"I've had bad experiences with VAs before":</strong></p>
+                            <div class="template-box">"I really appreciate you sharing that — that's actually very common and it usually comes down to unclear expectations or poor communication. The way I work is very different — I do a full onboarding process, I check in regularly, and I'm very clear on timelines and deliverables. Would it help if I walked you through how my process works?"</div>
+                        </div>
+
+                        <div class="content-block">
+                            <h4><i class="fas fa-handshake"></i> CLOSING (3–5 minutes)</h4>
+                            <div class="template-box">"Based on our conversation, I think there's a really strong fit here. I'd love to send you a simple proposal today — it'll have the specific services we talked about, the pricing, and next steps.
+
+Would you be open to reviewing it and getting back to me by [specific day]?
+
+And just so I can set it up correctly — is there anything you want me to make sure I include in the proposal?"</div>
+                        </div>
+
+                        <div class="content-block">
+                            <h4><i class="fas fa-envelope-open-text"></i> AFTER THE CALL — SEND A RECAP EMAIL</h4>
+                            <p>Send this within 1 hour of the call:</p>
+                            <div class="template-box">Subject: Great speaking with you, [Name] — Here's your proposal 🙂
+
+Hi [Name],
+
+Thank you so much for taking the time to chat with me today! I really enjoyed learning about [their business/what they do].
+
+Based on our conversation, here's a quick summary of what we discussed:
+
+✅ Main challenge: [what they said]
+✅ Services I'm proposing: [list services]
+✅ Monthly rate: [your pricing]
+✅ Start date: [proposed start]
+
+I've attached a simple 1-page proposal with the full details. If everything looks good, just reply to this email with "Let's do it!" and I'll send over the contract and onboarding form.
+
+If you have any questions or want to adjust anything, I'm happy to hop on a quick 5-minute call.
+
+Looking forward to working with you!
+
+[Your name]
+[Your portfolio link]
+[Your contact details]</div>
+                        </div>
+
+                        <div class="content-block">
+                            <h4><i class="fas fa-tag"></i> YOUR PRICING GUIDE (STARTING RATES FOR BEGINNERS)</h4>
+                            <table>
+                                <tr>
+                                    <th>Service</th>
+                                    <th>Rate Range</th>
+                                </tr>
+                                <tr>
+                                    <td>General VA (admin, email, research)</td>
+                                    <td>₱150–₱250/hr or ₱8,000–₱15,000/mo</td>
+                                </tr>
+                                <tr>
+                                    <td>Social Media Management (basic)</td>
+                                    <td>₱10,000–₱20,000/mo</td>
+                                </tr>
+                                <tr>
+                                    <td>Social Media Management (full)</td>
+                                    <td>₱20,000–₱40,000/mo</td>
+                                </tr>
+                                <tr>
+                                    <td>Content Creation (graphics + captions)</td>
+                                    <td>₱5,000–₱15,000/mo</td>
+                                </tr>
+                                <tr>
+                                    <td>Email Management</td>
+                                    <td>₱8,000–₱12,000/mo</td>
+                                </tr>
+                                <tr>
+                                    <td>Project-based (website content, etc.)</td>
+                                    <td>₱5,000–₱25,000 per project</td>
+                                </tr>
+                            </table>
+                            <p><em>Note: Adjust based on your experience level and client location (international clients typically pay more)</em></p>
+                        </div>
+
+                        <div class="activity-banner">
+                            <i class="fas fa-fire"></i>
+                            <span>ACTIVITY: Practice your discovery call script with a friend or colleague this week. Record yourself on Loom walking through the questions so you can hear how you sound. Adjust until it feels natural.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- System Flow Section -->
+    <section class="system-flow" id="flow">
+        <div class="flow-container">
+            <h2 class="flow-title">The Full System Flow</h2>
+            <div class="flow-grid">
+                <div class="flow-step">
+                    <div class="flow-step-number">1</div>
+                    <h4>Optimize Profile</h4>
+                    <p>LinkedIn + Social</p>
+                    <i class="fas fa-arrow-right flow-arrow"></i>
+                </div>
+                <div class="flow-step">
+                    <div class="flow-step-number">2</div>
+                    <h4>Create Sample</h4>
+                    <p>Projects</p>
+                    <i class="fas fa-arrow-right flow-arrow"></i>
+                </div>
+                <div class="flow-step">
+                    <div class="flow-step-number">3</div>
+                    <h4>Build Portfolio</h4>
+                    <p>Website</p>
+                    <i class="fas fa-arrow-right flow-arrow"></i>
+                </div>
+                <div class="flow-step">
+                    <div class="flow-step-number">4</div>
+                    <h4>Find Clients</h4>
+                    <p>In Groups</p>
+                    <i class="fas fa-arrow-right flow-arrow"></i>
+                </div>
+                <div class="flow-step">
+                    <div class="flow-step-number">5</div>
+                    <h4>Outreach</h4>
+                    <p>Direct + Warm</p>
+                    <i class="fas fa-arrow-right flow-arrow"></i>
+                </div>
+                <div class="flow-step">
+                    <div class="flow-step-number">6</div>
+                    <h4>Track Leads</h4>
+                    <p>CRM Tracker</p>
+                    <i class="fas fa-arrow-right flow-arrow"></i>
+                </div>
+                <div class="flow-step">
+                    <div class="flow-step-number">7</div>
+                    <h4>Close via</h4>
+                    <p>Discovery Call</p>
+                </div>
+            </div>
+            <p class="flow-note">"The system only works when you work it in order. Skip steps and you skip clients. Follow the flow and your first client is closer than you think."</p>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section" id="cta">
+        <div class="cta-container">
+            <div class="cta-header">
+                <h2>Ready to Look Like the Professional VA You Already Are?</h2>
+                <p>Choose the next step that fits where you are right now.</p>
+            </div>
+            <div class="cta-grid">
+                <div class="cta-card featured">
+                    <div class="cta-icon"><i class="fas fa-desktop"></i></div>
+                    <h3>Build My Portfolio Website</h3>
+                    <p>We'll build your complete VA portfolio website for you — done in 3–5 days.</p>
+                    <a href="https://brihafe.github.io/portfolioform" target="_blank" class="cta-btn cta-btn-outline">GET MY WEBSITE →</a>
+                </div>
+                <div class="cta-card">
+                    <div class="cta-icon"><i class="fas fa-graduation-cap"></i></div>
+                    <h3>Access the Full Training Portal</h3>
+                    <p>Get the advanced modules, templates, scripts, and live coaching sessions.</p>
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfZmQX4yrUSN_aTydeTFqgSJdB86KUxH0XKj3ZGtFrwVHBHFQ/viewform" target="_blank" class="cta-btn cta-btn-primary">JOIN THE TRAINING →</a>
+                </div>
+                <div class="cta-card">
+                    <div class="cta-icon"><i class="fas fa-box-open"></i></div>
+                    <h3>Get Advanced Client Systems</h3>
+                    <p>Done-for-you proposal templates, CRM systems, and closing scripts.</p>
+                    <a href="https://ferdycapizenova.github.io/Paid-Courses/" target="_blank" class="cta-btn cta-btn-text">VIEW PAID RESOURCES →</a>
+                </div>
+            </div>
+            <div class="resources-row">
+                <a href="https://ferdycapizenova.github.io/website/" target="_blank" class="resource-link">
+                    <i class="fas fa-gift"></i> More Free Resources
+                </a>
+                <a href="https://www.youtube.com/@ferdycapizenova" target="_blank" class="resource-link">
+                    <i class="fab fa-youtube"></i> All Past Trainings
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-brand">
+                <a href="#" class="logo">
+                    <i class="fas fa-rocket"></i>
+                    Ferdy Capizeño VA Training
+                </a>
+                <p>Built for Filipino VAs ready to get clients online. Follow the system, execute each module, and land your first — or next — client.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#modules">Training Modules</a></li>
+                    <li><a href="#flow">System Flow</a></li>
+                    <li><a href="https://brihafe.github.io/portfolioform" target="_blank">Portfolio Service</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="https://ferdycapizenova.github.io/Paid-Courses/" target="_blank">Paid Courses</a></li>
+                    <li><a href="https://ferdycapizenova.github.io/website/" target="_blank">Free Resources</a></li>
+                    <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSfZmQX4yrUSN_aTydeTFqgSJdB86KUxH0XKj3ZGtFrwVHBHFQ/viewform" target="_blank">Training Portal</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Connect</h4>
+                <ul>
+                    <li><a href="https://www.youtube.com/@ferdycapizenova" target="_blank">YouTube</a></li>
+                    <li><a href="#">Facebook</a></li>
+                    <li><a href="#">LinkedIn</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 VA Client Acquisition System. Built for Filipino VAs ready to get clients online.</p>
+            <div class="social-links">
+                <a href="https://www.youtube.com/@ferdycapizenova" target="_blank"><i class="fab fa-youtube"></i></a>
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top -->
+    <button class="back-to-top" id="backToTop" onclick="scrollToTop()">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script>
+        // Progress Bar
+        function updateProgressBar() {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+            document.getElementById('progressBar').style.width = scrollPercent + '%';
+        }
+
+        window.addEventListener('scroll', updateProgressBar);
+
+        // Module Toggle
+        function toggleModule(header) {
+            const card = header.closest('.module-card');
+            const wasExpanded = card.classList.contains('expanded');
+
+            // Close all other cards
+            document.querySelectorAll('.module-card.expanded').forEach(c => {
+                if (c !== card) {
+                    c.classList.remove('expanded');
+                }
+            });
+
+            // Toggle current card
+            card.classList.toggle('expanded');
+
+            // Scroll to card if expanding
+            if (!wasExpanded) {
+                setTimeout(() => {
+                    const offset = 100;
+                    const cardTop = card.getBoundingClientRect().top + window.scrollY - offset;
+                    window.scrollTo({ top: cardTop, behavior: 'smooth' });
+                }, 100);
+            }
+        }
+
+        // Scroll to Module
+        function scrollToModule(index) {
+            const cards = document.querySelectorAll('.module-card');
+            if (cards[index]) {
+                const offset = 100;
+                const cardTop = cards[index].getBoundingClientRect().top + window.scrollY - offset;
+                window.scrollTo({ top: cardTop, behavior: 'smooth' });
+
+                // Expand the module
+                cards[index].classList.add('expanded');
+                document.querySelectorAll('.module-card').forEach((c, i) => {
+                    if (i !== index) c.classList.remove('expanded');
+                });
+            }
+        }
+
+        // Back to Top
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        const backToTopBtn = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 500) {
+                backToTopBtn.classList.add('visible');
+            } else {
+                backToTopBtn.classList.remove('visible');
+            }
+        });
+
+        // Fade In Animation
+        const fadeElements = document.querySelectorAll('.fade-in');
+        const fadeObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        fadeElements.forEach(el => fadeObserver.observe(el));
+
+        // Mobile Menu
+        function toggleMobileMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+            navLinks.style.position = 'absolute';
+            navLinks.style.top = '100%';
+            navLinks.style.left = '0';
+            navLinks.style.right = '0';
+            navLinks.style.flexDirection = 'column';
+            navLinks.style.background = 'rgba(10, 10, 10, 0.98)';
+            navLinks.style.padding = '1rem';
+            navLinks.style.gap = '1rem';
+            navLinks.style.borderBottom = '1px solid rgba(255, 194, 0, 0.2)';
+        }
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const offset = 80;
+                    const targetTop = target.getBoundingClientRect().top + window.scrollY - offset;
+                    window.scrollTo({ top: targetTop, behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Navbar background on scroll
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.style.background = 'rgba(10, 10, 10, 0.98)';
+            } else {
+                navbar.style.background = 'rgba(10, 10, 10, 0.95)';
+            }
+        });
+    </script>
+</body>
+</html>
